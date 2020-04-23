@@ -16,7 +16,6 @@ export PATH="$PATH:/Library/TeX/texbin"
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
-
 # Basic auto/tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
@@ -34,7 +33,6 @@ plugins=(
   brew
   zsh-syntax-highlighting
   zsh-autosuggestions
-  fasd
 )
 #plugins+=( k z alias-tips zsh-completions almostontop zsh-autosuggestions )
 CASE_SENSITIVE="true"
