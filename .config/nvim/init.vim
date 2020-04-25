@@ -11,11 +11,10 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-call plug#begin('~/.local/share/nvim/pluged')      " let vim-plug manage plugin, required
+call plug#begin('~/.local/share/nvim/plugged')      " let vim-plug manage plugin, required
 
-Plug 'dracula/vim'    "colorscheme
-"Plug 'jiangmiao/auto-pairs' "auto pairs
-Plug 'sheerun/vim-polyglot'
+Plug 'dracula/vim'                    "colorscheme
+Plug 'sheerun/vim-polyglot'           "syntax hightlight
 
 "coc.nvim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -78,12 +77,9 @@ if has("termguicolors")  " set true colors
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
-"hi Normal guibg=NONE ctermbg=NONE|               " transparency fix
-"let g:dracula_colorterm = 1
+
 colorscheme dracula                              " set colorscheme
 let g:dracula_italic = 0
-"set background=dark
-"let g:dracula_termcolors=256                     " enable 256 colors support
 
 filetype plugin indent on
 
@@ -116,7 +112,6 @@ set splitbelow
 """"""""""""""
 "  Autocmnd  "
 """"""""""""""
-autocmd BufRead,BufNewFile /tmp/calcurse*,~/.config/.calcurse/notes/* set filetype=markdown
 
 " F9 to run python, JS inside vim
 autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
@@ -125,6 +120,7 @@ autocmd FileType javascript map <buffer> <F9> <esc>:w<CR>:exec '!node' shellesca
 
 " Vertically center document when entering insert mode
 autocmd InsertEnter * norm zz
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -252,6 +248,9 @@ map <f6> :PANDOCPDF<cr>
 command! ZATHURA execute "!zathura %:r.pdf"
 map <f5> :ZATHURA<cr>
 
+"""""""""
+"  COC  "
+"""""""""
 
 let g:coc_global_extensions = [
       \ 'coc-tsserver',
