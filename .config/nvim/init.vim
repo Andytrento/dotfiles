@@ -14,17 +14,11 @@
 call plug#begin('~/.local/share/nvim/pluged')      " let vim-plug manage plugin, required
 
 Plug 'dracula/vim'    "colorscheme
-Plug 'jiangmiao/auto-pairs' "auto pairs
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'jiangmiao/auto-pairs' "auto pairs
+Plug 'sheerun/vim-polyglot'
 
-"python
-  Plug 'deoplete-plugins/deoplete-jedi'
-  Plug 'davidhalter/jedi-vim'
-  Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-
-"Javascript
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-  Plug 'pangloss/vim-javascript'
+"coc.nvim
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'scrooloose/nerdcommenter'       "Commenting
 Plug 'christoomey/vim-tmux-navigator' "navigating in tmux
@@ -65,8 +59,6 @@ set relativenumber
 "set term=xterm-256color                          " terminal type
 set wildmenu wildmode=longest:full,full          " wildmode settings
 set completeopt+=menuone,noinsert
-set completeopt-=preview
-set shortmess+=c
 """""""""""""""""
 "  UI Settings  "
 """""""""""""""""
@@ -86,8 +78,8 @@ if has("termguicolors")  " set true colors
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
-hi Normal guibg=NONE ctermbg=NONE|               " transparency fix
-let g:dracula_colorterm = 1
+"hi Normal guibg=NONE ctermbg=NONE|               " transparency fix
+"let g:dracula_colorterm = 1
 colorscheme dracula                              " set colorscheme
 let g:dracula_italic = 0
 "set background=dark
@@ -260,45 +252,82 @@ map <f6> :PANDOCPDF<cr>
 command! ZATHURA execute "!zathura %:r.pdf"
 map <f5> :ZATHURA<cr>
 
-""""""""""""""
-"  Deoplete  "
-""""""""""""""
 
-let g:deoplete#enable_at_startup = 1
-" Candidate list item number limit
-call deoplete#custom#option('max_list', 7)
-" Use smartcase.
-call deoplete#custom#option('smart_case', v:true)
+let g:coc_global_extensions = [
+      \ 'coc-tsserver',
+      \ 'coc-python',
+      \ 'coc-pairs'
+      \]
+" TextEdit might fail if hidden is not set.
+set hidden
 
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
 
-inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+" Give more space for displaying messages.
+set cmdheight=2
 
-"<TAB>: completion.
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#manual_complete()
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 function! s:check_back_space() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 "Color for popup menu
 highlight Pmenu ctermbg=8 guibg=#606060
 highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
 highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
 
-
-let g:python3_host_prog = '/usr/local/bin/python3'
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " === vimtex setting === "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'tex': g:vimtex#re#deoplete
-      \})
 
 let g:tex_flavor='latex'
 let g:vimtex_view_method='zathura'
