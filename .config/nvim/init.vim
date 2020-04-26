@@ -1,4 +1,4 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "        _   _       _                  _____             __ _               "
 "       | \ | |     (_)                / ____|           / _(_)              "
 "       |  \| |_   ___ _ __ ___       | |     ___  _ __ | |_ _  __ _         "
@@ -24,16 +24,16 @@ Plug 'christoomey/vim-tmux-navigator' "navigating in tmux
 Plug 'tpope/vim-surround'
 
 "Snippets
-Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 "Fuzzy search
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
 
 "markdown
-  Plug 'junegunn/goyo.vim'
-  Plug 'tpope/vim-markdown'
+  "Plug 'junegunn/goyo.vim'
+  "Plug 'tpope/vim-markdown'
 
 Plug 'lervag/vimtex'          "edit Latex
 Plug 'haya14busa/is.vim'      "incremental search improved 
@@ -44,8 +44,12 @@ call plug#end()       " required
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
 " => Basic Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 set autoread                                     " reload on external file changes
 set backspace=indent,eol,start                   " backspace behaviour
 set clipboard=unnamed,unnamedplus                " enable clipboard
@@ -55,9 +59,9 @@ set mouse=a                                      " enable mouse support
 set nowrap                                       " disable wrapping
 set number                                       " show line numbers
 set relativenumber
-"set term=xterm-256color                          " terminal type
 set wildmenu wildmode=longest:full,full          " wildmode settings
 set completeopt+=menuone,noinsert
+
 """""""""""""""""
 "  UI Settings  "
 """""""""""""""""
@@ -78,19 +82,30 @@ if has("termguicolors")  " set true colors
   set termguicolors
 endif
 
-colorscheme dracula                              " set colorscheme
+
 let g:dracula_italic = 0
+colorscheme dracula                              " set colorscheme
+
+
+hi Normal guibg=NONE ctermbg=NONE
+hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE 
 
 filetype plugin indent on
+
 
 highlight Cursor guifg=white guibg=gray
 highlight iCursor guifg=white guibg=steelblue
 
-"Status line
-set laststatus=0                                 " disable statusline
-set ruler rulerformat=%40(%=%<%F%m\ \
-      \›\ %{getfsize(@%)}B\ \
-      \›\ %l/%L:%v%)
+set statusline=
+set statusline+=%#IncSearch#
+set statusline+=\ %y
+set statusline+=\ %r
+set statusline+=%#CursorLineNr#
+set statusline+=\ %F
+set statusline+=%= "Right side settings
+set statusline+=%#Search#
+set statusline+=\ %l/%L
+set statusline+=\ [%c]
 
 
 "Performace Tuning
@@ -106,8 +121,7 @@ set lazyredraw                                   " enable lazyredraw
 set nocursorline                                 " disable cursorline
 set ttyfast                                      " enable fast terminal connection
 
-set splitright
-set splitbelow
+set splitright splitbelow
 
 """"""""""""""
 "  Autocmnd  "
@@ -115,8 +129,8 @@ set splitbelow
 
 " F9 to run python, JS inside vim
 autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
-autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType javascript map <buffer> <F9> <esc>:w<CR>:exec '!node' shellescape(@%, 1)<CR>
+
 
 " Vertically center document when entering insert mode
 autocmd InsertEnter * norm zz
@@ -142,6 +156,9 @@ noremap j gj
 noremap k gk
 nnoremap <Leader><Leader> <C-^>
 
+xnoremap K :move '<-2<CR>gv-gv
+xnoremap J :move '>+1<CR>gv-gv
+
 "Search and replace using * 
 nnoremap <Leader>r :%s///g<Left><Left>
 nnoremap <Leader>rc :%s///gc<Left><Left><Left>
@@ -152,6 +169,8 @@ xnoremap <silent> s* "sy:let @/=@s<CR>cgn
 
 " Enable spell checking, s for spell check
 map <leader>s :setlocal spell! spelllang=en<CR>
+map <leader>u :CocList snippets<CR>
+
 
 " Switch between tabs
 nnoremap <Leader>1 1gt
@@ -176,7 +195,9 @@ endif
 "  Neoformat  "
 """""""""""""""
 let g:neoformat_enabled_python = ['black']
+let g:neoformat_enabled_javascript = ['prettier']
 nnoremap <Leader>f :Neoformat<CR>
+
 
 """"""""""""""""
 "  Indentline  "
@@ -248,6 +269,12 @@ map <f6> :PANDOCPDF<cr>
 command! ZATHURA execute "!zathura %:r.pdf"
 map <f5> :ZATHURA<cr>
 
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_new_list_item_indent = 2
+
+
 """""""""
 "  COC  "
 """""""""
@@ -255,32 +282,22 @@ map <f5> :ZATHURA<cr>
 let g:coc_global_extensions = [
       \ 'coc-tsserver',
       \ 'coc-python',
-      \ 'coc-pairs'
+      \ 'coc-pairs',
+      \ 'coc-emmet',
+      \ 'coc-json',
+      \ 'coc-css',
+      \ 'coc-vimtex'
       \]
-" TextEdit might fail if hidden is not set.
-set hidden
 
-" Some servers have issues with backup files, see #649.
+set hidden
 set nobackup
 set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
+set cmdheight=2         " Give more space for displaying messages.
 set updatetime=300
-
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
+set shortmess+=c        " Don't pass messages to |ins-completion-menu|.
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
+"tab completion
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -291,6 +308,10 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+"<CR> to confirm completion, use: >
+
+	inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>

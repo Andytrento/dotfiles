@@ -1,7 +1,7 @@
 export TERM="xterm-256color" # This sets up colors properly
 export EDITOR="nvim"
 export LC_ALL=en_US.UTF-8
-export LC_TERMINAL="iTerm2"
+export LC_TERMINAL="alacritty"
 #export LANG="en"
 export LC_ALL=en_US.UTF-8
 export PATH=/usr/local/share/python:$PATH
