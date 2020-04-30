@@ -1,7 +1,7 @@
 {
 "diagnostic.displayByAle": false,
 "diagnostic.enable":false,
-"suggest.maxCompleteItemCount": 3,
+"suggest.maxCompleteItemCount": 7,
 "suggest.enablePreview": true,
   "suggest.floatEnable":true,
   "suggest.noselect":false,

@@ -19,7 +19,7 @@ Plug 'sheerun/vim-polyglot'           "syntax hightlight
 "coc.nvim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'scrooloose/nerdcommenter'       "Commenting
+Plug 'preservim/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator' "navigating in tmux
 Plug 'tpope/vim-surround'
 
@@ -34,6 +34,7 @@ Plug 'honza/vim-snippets'
 "markdown
   "Plug 'junegunn/goyo.vim'
   "Plug 'tpope/vim-markdown'
+Plug 'Glench/Vim-Jinja2-Syntax'
 
 Plug 'lervag/vimtex'          "edit Latex
 Plug 'haya14busa/is.vim'      "incremental search improved 
@@ -111,7 +112,6 @@ set statusline+=\ [%c]
 "Performace Tuning
 set autoindent expandtab                         " autoindentation & tabbing
 set shiftwidth=2 softtabstop=2 tabstop=2         " 1 tab = 2 spaces
-
 set hlsearch ignorecase incsearch smartcase      " search options
 
 set nobackup noswapfile nowritebackup            " disable backup/swap files
@@ -172,14 +172,11 @@ map <leader>s :setlocal spell! spelllang=en<CR>
 map <leader>u :CocList snippets<CR>
 
 
+
 " Switch between tabs
 nnoremap <Leader>1 1gt
 nnoremap <Leader>2 2gt
 nnoremap <Leader>3 3gt
-nnoremap <Leader>4 4gt
-nnoremap <Leader>5 5gt
-nnoremap <Leader>6 6gt
-nnoremap <Leader>7 7gt
 
 
 "Tmux
@@ -190,6 +187,7 @@ else
     let &t_SI = "\e[5 q"
     let &t_EI = "\e[2 q"
 endif
+
 
 """""""""""""""
 "  Neoformat  "
@@ -351,8 +349,10 @@ highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
 
 let g:tex_flavor='latex'
 let g:vimtex_view_method='zathura'
-let g:vimtex_fold_enabled = 1
+let g:vimtex_fold_enabled = 0
 
+" To prevent conceal in LaTeX files
+let g:tex_conceal = ''
 map <F8> :!zathura<space>%:r.pdf<space>&<Enter><Enter>
 autocmd filetype tex nmap <buffer> <c-t> :!latexmk -pdf %<cr>
 nnoremap <localleader>lt :call vimtex#fzf#run()<cr>
