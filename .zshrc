@@ -33,13 +33,18 @@ alias python=python3
 alias vim="nvim"
 alias vi=nvim
 alias pip=pip3
-alias tat="tmux attach -t"
-alias tns="tmux new-session -s"
-alias tls="tmux list-sessions"
-alias tk="tmux kill-session -t"
-alias pdf="nohup zathura & exit"
-#alias ..='cd ..'
 alias notes="~/Dropbox/notes"
+alias pdf="nohup zathura & exit"
+
+
+#tmux alias
+alias ta='tmux attach -t'
+alias tad='tmux attach -d -t'
+alias ts='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tksv='tmux kill-server'
+alias tkss='tmux kill-session -t'
+
 
 
 function cd() {
