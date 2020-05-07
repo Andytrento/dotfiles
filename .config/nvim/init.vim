@@ -35,9 +35,10 @@ Plug 'honza/vim-snippets'
   "Plug 'junegunn/goyo.vim'
   "Plug 'tpope/vim-markdown'
 Plug 'Glench/Vim-Jinja2-Syntax'
+"Plug 'jalvesaq/nvim-r'
 
 Plug 'lervag/vimtex'          "edit Latex
-Plug 'haya14busa/is.vim'      "incremental search improved 
+Plug 'haya14busa/is.vim'      "incremental search improved
 Plug 'yggdroot/indentline'    "indent  line for vim
 Plug 'sbdchd/neoformat'       "formatting
 
@@ -89,7 +90,7 @@ colorscheme dracula                              " set colorscheme
 
 
 hi Normal guibg=NONE ctermbg=NONE
-hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE 
+hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
 
 filetype plugin indent on
 
@@ -119,6 +120,11 @@ set undofile undodir=~/.vim/undo undolevels=9999 " undo options
 
 set lazyredraw                                   " enable lazyredraw
 set nocursorline                                 " disable cursorline
+
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
+
 set ttyfast                                      " enable fast terminal connection
 
 set splitright splitbelow
@@ -128,13 +134,15 @@ set splitright splitbelow
 """"""""""""""
 
 " F9 to run python, JS inside vim
-autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
-autocmd FileType javascript map <buffer> <F9> <esc>:w<CR>:exec '!node' shellescape(@%, 1)<CR>
+autocmd FileType python map <buffer> <Leader>0 :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType javascript map <buffer> <Leader>0 <esc>:w<CR>:exec '!node' shellescape(@%, 1)<CR>
 
 
 " Vertically center document when entering insert mode
 autocmd InsertEnter * norm zz
 
+" Remove trailing whitespace on save
+autocmd BufWritePre * %s/\s\+$//e
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -159,7 +167,7 @@ nnoremap <Leader><Leader> <C-^>
 xnoremap K :move '<-2<CR>gv-gv
 xnoremap J :move '>+1<CR>gv-gv
 
-"Search and replace using * 
+"Search and replace using *
 nnoremap <Leader>r :%s///g<Left><Left>
 nnoremap <Leader>rc :%s///gc<Left><Left><Left>
 xnoremap <Leader>r :s///g<Left><Left>
@@ -194,6 +202,7 @@ endif
 """""""""""""""
 let g:neoformat_enabled_python = ['black']
 let g:neoformat_enabled_javascript = ['prettier']
+
 nnoremap <Leader>f :Neoformat<CR>
 
 
@@ -273,6 +282,7 @@ let g:vim_markdown_strikethrough = 1
 let g:vim_markdown_new_list_item_indent = 2
 
 
+
 """""""""
 "  COC  "
 """""""""
@@ -281,9 +291,9 @@ let g:coc_global_extensions = [
       \ 'coc-tsserver',
       \ 'coc-python',
       \ 'coc-pairs',
-      \ 'coc-emmet',
+      "\ 'coc-emmet',
       \ 'coc-json',
-      \ 'coc-css',
+      "\ 'coc-css',
       \ 'coc-vimtex'
       \]
 

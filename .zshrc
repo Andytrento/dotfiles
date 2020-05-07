@@ -1,6 +1,6 @@
 export TERM="xterm-256color" # This sets up colors properly
 export LC_TERMINAL="alacritty"
-#export PATH=/usr/local/share/python:$PATH
+ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="avit"
 
 
@@ -11,6 +11,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
 
+plugins=(git)
 
 
 # User configuration
@@ -23,9 +24,6 @@ export LANG=en_US.UTF-8
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
 
-plugins=(
-  git
-)
 export EDITOR='nvim'
 
 alias c="clear"
@@ -39,8 +37,9 @@ alias tat="tmux attach -t"
 alias tns="tmux new-session -s"
 alias tls="tmux list-sessions"
 alias tk="tmux kill-session -t"
-alias zathura="nohup zathura & exit"
-alias ..='cd ..'
+alias pdf="nohup zathura & exit"
+#alias ..='cd ..'
+alias notes="~/Dropbox/notes"
 
 
 function cd() {
@@ -63,31 +62,31 @@ function cd() {
 }
 #
 #export PROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[pink]%}%D{%T}%{$reset_color%} [$(whoami)] %{$fg_bold[blue]%}%c $(git_prompt_info)% %{$reset_color%}'
-ZSH_CUSTOM=$HOME/.ohmyzsh/custom [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh 
+ZSH_CUSTOM=$HOME/.ohmyzsh/custom [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files'
 
 # Change cursor shape for different vi modes.
 #
-function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
-}
-zle -N zle-keymap-select
-zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    echo -ne "\e[5 q"
-}
-zle -N zle-line-init
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+#function zle-keymap-select {
+  #if [[ ${KEYMAP} == vicmd ]] ||
+     #[[ $1 = 'block' ]]; then
+    #echo -ne '\e[1 q'
+  #elif [[ ${KEYMAP} == main ]] ||
+       #[[ ${KEYMAP} == viins ]] ||
+       #[[ ${KEYMAP} = '' ]] ||
+       #[[ $1 = 'beam' ]]; then
+    #echo -ne '\e[5 q'
+  #fi
+#}
+#zle -N zle-keymap-select
+#zle-line-init() {
+    #zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    #echo -ne "\e[5 q"
+#}
+#zle -N zle-line-init
+#echo -ne '\e[5 q' # Use beam shape cursor on startup.
+#preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 
-export PATH="$PATH:/usr/local/texlive/2020/bin/x86_64-darwin" 
+export PATH="$PATH:/usr/local/texlive/2020/bin/x86_64-darwin"
 export DATABASE_URL="postgresql:///sample_db"

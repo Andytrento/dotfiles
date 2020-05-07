@@ -1,11 +1,15 @@
 # Window Customization
 window:
+
   dimensions:
-    columns: 140
-    lines: 38
+    columns: 80
+    lines: 25
+
   padding:
-    x: 10
-    y: 10
+    x: 5
+    y: 5
+# Spread additional padding evenly around the terminal content.
+  dynamic_padding: false
   decorations: none
 scrolling:
   history: 10000
@@ -16,22 +20,23 @@ dynamic_title: true
 # Font Customization
 font:
   normal:
-    family: Fira Code Light
-    tyle: Regular
+    family: "Fira Code Light"
+    tyle: Light
   bold:
     family: Fira Code Light
     style: Bold
   italic:
     family: Fira Code Light
     style: Italic
-  size: 13.25
+  size: 13
+
   offset:
     x: 0
     y: 0
   glyph_offset:
     x: 0
     y: 0
-  use_thin_strokes: false
+  #use_thin_strokes: false
   debug:
     persistent_logging: false
 draw_bold_text_with_bright_colors: true
@@ -80,6 +85,8 @@ key_bindings:
   - { key: F,      mods: Command|Control,    action: ToggleFullscreen }
   - { key: H,      mods: Command,            action: Hide             }
   - { key: M,      mods: Command,            action: Minimize         }
+  - { key: F,  mods: Alt,           chars: "\x1bf"                       }
+  - { key: B,  mods: Alt,           chars: "\x1bb"                       }
 # ||\\ //||
 #
 # || \// || Mackenzie Criswell
