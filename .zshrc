@@ -24,7 +24,10 @@ export LANG=en_US.UTF-8
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
 
+# Setting up Defaults
 export EDITOR='nvim'
+export TERMINAL='alacritty'
+export BROWSER='brave'
 
 alias c="clear"
 alias reload="source ~/.zshrc"
@@ -35,7 +38,8 @@ alias vi=nvim
 alias pip=pip3
 alias notes="~/Dropbox/notes"
 alias pdf="nohup zathura & exit"
-
+alias tsm='transmission-remote'
+alias brave='open -a Brave\ Browser'
 
 #tmux alias
 alias ta='tmux attach -t'
@@ -44,6 +48,7 @@ alias ts='tmux new-session -s'
 alias tl='tmux list-sessions'
 alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
+alias vf='vifm .'
 
 
 
@@ -95,3 +100,8 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 export PATH="$PATH:/usr/local/texlive/2020/bin/x86_64-darwin"
 export DATABASE_URL="postgresql:///sample_db"
+
+export SPOTIPY_CLIENT_ID=8430f5c9bbad490c8e2009fa80a39ddc
+export SPOTIPY_CLIENT_SECRET=e1a29ffb57114635b4244cc4999383c3
+export SPOTIPY_REDIRECT_URI='http://localhost'
+export PATH="/usr/local/sbin:$PATH"

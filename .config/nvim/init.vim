@@ -1,4 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "        _   _       _                  _____             __ _               "
 "       | \ | |     (_)                / ____|           / _(_)              "
 "       |  \| |_   ___ _ __ ___       | |     ___  _ __ | |_ _  __ _         "
@@ -22,6 +23,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator' "navigating in tmux
 Plug 'tpope/vim-surround'
+Plug 'majutsushi/tagbar'
 
 "Snippets
 Plug 'SirVer/ultisnips'
@@ -67,6 +69,7 @@ set completeopt+=menuone,noinsert
 """""""""""""""""
 "  UI Settings  "
 """""""""""""""""
+
 filetype plugin indent on                        " enable filetype detection
 set listchars=trail:•,tab:▸\               " whitespace characters
 set scrolloff=999                                " center cursor position vertically
@@ -222,8 +225,16 @@ let g:UltiSnipsExpandTrigger = "<c-j>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 
+""""""""""""
+"  Tagbar  "
+"
+""""""""""""
+map <leader>t :TagbarToggle<CR>
 
-"""""""""""""""""""""""""""" fzf settings""""""""""""""""""""""""""
+
+"""""""""
+"  fzf  "
+"""""""""
 
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
 
